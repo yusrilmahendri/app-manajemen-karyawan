@@ -1,5 +1,12 @@
 # HOW TO CLONE FILE HERE
 
+#langkah sebelum clone file here 
+
+1. siapakan composer, jika belum ada silahkan download kemudian instalisasi
+   link download composer https://getcomposer.org/
+3. download php minimal versi 8.0
+4. instalisasi xampp
+   
 ## Terdapat beberapa langkah-langkah yang harus di lakukan untuk melakukan clone file ini di device komputer anda
 next step by step clone repository:
 

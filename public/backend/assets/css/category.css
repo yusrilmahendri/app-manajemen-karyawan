@@ -1,0 +1,26 @@
+.list-item {
+  cursor: pointer;
+  padding: 2px 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.list-item.active {
+  background-color: #f1f1f1;
+}
+/* style.css */
+
+/* Remove underline from links */
+a {
+  text-decoration: none;
+}
+
+/* Set default text color to black */
+.list-item a {
+  color: black;
+}
+
+/* Add blue color and underline to links on hover */
+.list-item a:hover {
+  color: blue;
+  text-decoration: underline;
+}

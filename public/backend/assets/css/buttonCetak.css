@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+}
+
+.cetak {
+  width: 0px;
+  position: relative;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  float: left;
+}
+
+.btn-cetak {
+    float: right;
+    margin-top: 0px;
+    right: 20px;
+    top: 0px;
+    /* Add more styles as needed */
+}
+
+
+
+

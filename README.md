@@ -49,5 +49,3 @@ Setelah menjalankan langkah-langkah di atas, Anda seharusnya dapat mengakses apl
 
 ### IF HAS BUG OR ERROR PLEASE CONTAT ME ON BIO MY PROFILE GITHUB..
 ### ENJOY, THANKS YOU. HAVE A NICE DAY.! ###
-# app-manajemen-karyawan
-# app-manajemen-karyawan

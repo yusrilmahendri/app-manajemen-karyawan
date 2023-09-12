@@ -1,6 +1,6 @@
 # HOW TO CLONE FILE HERE
 
-#langkah sebelum clone file here 
+## langkah sebelum clone file here 
 
 1. siapakan composer, jika belum ada silahkan download kemudian instalisasi
    link download composer https://getcomposer.org/

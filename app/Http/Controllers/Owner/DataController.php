@@ -29,132 +29,34 @@ class DataController extends Controller
 
     public function record()
     {
-        // Retrieve users with their orders and professions
-        $users = User::where('role', 'user')
+        $data = User::where('role', 'user')
             ->with('orders', 'profesis')
             ->orderBy('created_at', 'desc')
             ->get();
 
-        
-            $completedDesainerOrders = 0;
-            $completedKonikaOrders = 0;
-            $completedOutdorOrders = 0; // Initialize Outdor
-            $completedDTFOrders = 0; // Initialize DTF
-            $completedLaserOrders = 0; // Initialize Laser
+        // Create a new array to format the data for DataTables
+        $formattedData = [];
 
-        $data = [];
+        foreach ($data as $user) {
+            $formattedData[] = [
+                'name' => $user->name,
+                'qty_desainer' => $user->orders->sum('qty_desainer'),
+                'qty_konika' => $user->orders->sum('qty_konika'),
+                'qty_outdor' => $user->orders->sum('qty_outdor'),
+                'qty_dtf' => $user->orders->sum('qty_dtf'),
+                'qty_laser' => $user->orders->sum('qty_laser'),
+            ];
+        }
 
-    
-        foreach ($users as $user) {
-         
-            if ($user->profesis) {
-                foreach ($user->profesis as $profession) {
-                    // Calculate the total quantity of completed orders for this profession
-                    $completedOrdersCount = $user->orders()
-                    ->where('profesi_id', $profession->id)
-                    ->where('qty', '>', 0)
-                    ->sum('qty');
-                    
-                    
-    
-                    // Determine the profession and add the completed orders count accordingly
-                    if ($profession->name === 'Desainer') {
-                        $completedDesainerOrders += $completedOrdersCount;
-                    } elseif ($profession->name === 'Konika') {
-                        $completedKonikaOrders += $completedOrdersCount;
-                    } elseif ($profession->name === 'Outdor') {
-                        $completedOutdorOrders += $completedOrdersCount;
-                    } elseif ($profession->name === 'DTF') {
-                        $completedDTFOrders += $completedOrdersCount;
-                    } elseif ($profession->name === 'Laser') {
-                        $completedLaserOrders += $completedOrdersCount;
-                    }
-                }
-    
-                $data[] = [
-                    'user_name' => $user->name,
-                    'desainer' => $completedDesainerOrders,
-                    'konika' => $completedKonikaOrders,
-                    'outdor' => $completedOutdorOrders,
-                    'dtf' => $completedDTFOrders,
-                    'laser' => $completedLaserOrders,
-                ];
-            }
-        }
-    
-        return datatables()->of($data)
-            ->addIndexColumn()
-            ->toJson();
+        return response()->json(['data' => $formattedData]);
     }
-    
-    public function records()
-    {
-        // Retrieve users with their orders and professions
-        $users = User::where('role', 'user')
-            ->with('orders', 'profesis')
-            ->orderBy('created_at', 'desc')
-            ->get();
-        
-            $completedDesainerOrders = 0;
-            $completedKonikaOrders = 0;
-            $completedOutdorOrders = 0; // Initialize Outdor
-            $completedDTFOrders = 0; // Initialize DTF
-            $completedLaserOrders = 0; // Initialize Laser
-            
-        $data = [];
-    
-        foreach ($users as $user) {
-           
-    
-            if ($user->profesis) {
-                foreach ($user->profesis as $profession) {
-                    // Calculate the total quantity of completed orders for this profession
-                    $completedOrdersCount = $user->orders()
-                    ->where('profesi_id', $profession->id)
-                    ->where('qty', '>', 0)
-                    ->sum('qty');
-    
-                    // Initialize all variables with the same value
-                    $completedDesainerOrders = $completedOrdersCount;
-                    $completedKonikaOrders = $completedOrdersCount;
-                    $completedOutdorOrders = $completedOrdersCount;
-                    $completedDTFOrders = $completedOrdersCount;
-                    $completedLaserOrders = $completedOrdersCount;
-    
-                    // Determine the profession and add the completed orders count accordingly
-                    if ($profession->name === 'Desainer') {
-                        $completedDesainerOrders += $completedOrdersCount;
-                    } elseif ($profession->name === 'Konika') {
-                        $completedKonikaOrders += $completedOrdersCount;
-                    } elseif ($profession->name === 'Outdor') {
-                        $completedOutdorOrders += $completedOrdersCount;
-                    } elseif ($profession->name === 'DTF') {
-                        $completedDTFOrders += $completedOrdersCount;
-                    } elseif ($profession->name === 'Laser') {
-                        $completedLaserOrders += $completedOrdersCount;
-                    }
-                }
-    
-                $data[] = [
-                    'user_name' => $user->name,
-                    'desainer' => $completedDesainerOrders,
-                    'konika' => $completedKonikaOrders,
-                    'outdor' => $completedOutdorOrders,
-                    'dtf' => $completedDTFOrders,
-                    'laser' => $completedLaserOrders,
-                ];
-            }
-        }
-    
-        return $data;
-    }
-    
+
 
     public function generatePdfRecord()
     {
         // Call the record function to retrieve the data
         $data = $this->records();
-    
+
         // Generate HTML for the PDF content
         $html = '<table style="width:100%; border-collapse: collapse;">';
         $html .= '<thead>';
@@ -168,7 +70,7 @@ class DataController extends Controller
         $html .= '</tr>';
         $html .= '</thead>';
         $html .= '<tbody>';
-    
+
         foreach ($data as $item) {
             $html .= '<tr>';
             $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['user_name'] . '</td>';
@@ -179,22 +81,22 @@ class DataController extends Controller
             $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['laser'] . '</td>';
             $html .= '</tr>';
         }
-    
+
         $html .= '</tbody>';
         $html .= '</table>';
-    
+
         // Generate PDF from the HTML content
         $pdf = PDF::loadHTML($html);
-    
+
         // Optional: Set PDF options
         $pdf->setOption('margin-top', 10);
         $pdf->setOption('margin-bottom', 10);
-    
+
         // Return the PDF as a download
         return $pdf->download('records.pdf');
     }
-    
 
-        
 
-}   
+
+
+}

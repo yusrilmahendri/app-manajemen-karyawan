@@ -12,8 +12,8 @@ class DataController extends Controller
 {
     public function order()
     {
-        $orders = Order::with('users')->orderBy('created_at', 'desc')->get();
-    
+        $orders = Order::with('users')->orderBy('created_at', 'asc')->get();
+
         return datatables()->of($orders)
             ->addColumn('name', function ($order) {
                 $names = $order->users->pluck('name')->implode(', ');
@@ -24,6 +24,6 @@ class DataController extends Controller
             ->rawColumns(['action'])
             ->toJson();
     }
-    
-   
+
+
 }

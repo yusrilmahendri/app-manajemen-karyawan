@@ -18,7 +18,11 @@ return new class extends Migration
             $table->enum('category', ['umum', 'mitra']);
             $table->integer('price');
             $table->date('deadline');
-            $table->integer('qty')->default(0);
+            $table->integer('qty_desainer')->default(0);
+            $table->integer('qty_dtf')->default(0);
+            $table->integer('qty_konika')->default(0);
+            $table->integer('qty_laser')->default(0);
+            $table->integer('qty_outdor')->default(0);
             $table->timestamps();
 
         });

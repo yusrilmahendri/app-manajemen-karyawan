@@ -1,4 +1,4 @@
-<a href="{{ route('user.todo.show', $model)}}" 
+<a href="{{ route('user.todo.show', $model)}}"
    class="btn btn-warning">
    <div class="icon">
     <i class="ri-calendar-todo-fill">
@@ -7,14 +7,16 @@
   </div>
 </a>
 
-<button href="{{ route('user.orders.complete', $model) }}" class="btn btn-danger" 
-    id="delete" style="margin-top:15px;">
+
+    <button href="{{ route('user.orders.complete', $model) }}" class="btn btn-danger" id="delete" style="margin-top:15px;">
         <div class="icon">
             <i class="ri-check-line">
                 Pekerjaan Selesai
             </i>
         </div>
-</button>
+    </button>
+
+
 
 
 <!-- sweat alert -->

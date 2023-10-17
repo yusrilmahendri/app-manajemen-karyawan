@@ -8,16 +8,16 @@ use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
-{   
+{
 
     public function setting()
     {
         // Get the currently authenticated user
         $user = Auth::user();
-    
+
         // Load the user's professions using the relationship
         $user->load('profesis');
-    
+
         // Return the view with the user's data
         return view('user.setting.index', compact('user'));
     }
@@ -34,11 +34,10 @@ class UserController extends Controller
 
     public function completeOrder(Order $order)
     {
-        if ($order->markAsCompleted()) {
+        if ($order->markAsCompleted()) { // Hapus parameter yang tidak diperlukan
             return redirect()->back()->with('success', 'Order telah selesai.');
         }
 
         return redirect()->back()->with('danger', 'Order telah selesai sebelumnya.');
     }
-
 }

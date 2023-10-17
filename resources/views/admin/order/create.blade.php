@@ -7,13 +7,13 @@
 
       <!-- Vertical Form -->
       <form class="row g-3" action="{{ route('admin.order.store') }}" method="POST">
-       
+
        @csrf
 
         <div class="col-12 @error('name_pelanggan') has-error @enderror">
           <label for="inputNanme4" class="form-label">Nama Pelanggan</label>
           <input type="text"  name="name_pelanggan" class="form-control" id="inputNanme4">
-        
+
           @error('name_pelanggan')
             <span class="help-block"> {{ $message }}</span>
           @enderror
@@ -22,7 +22,7 @@
         <div class="col-12 @error('name_jasa') has-error @enderror">
             <label for="inputNanme4" class="form-label">Nama Barang</label>
             <input type="text"  name="name_jasa" class="form-control" id="inputNanme4">
-          
+
             @error('name_jasa')
               <span class="help-block"> {{ $message }}</span>
             @enderror
@@ -37,7 +37,7 @@
                 </select>
             </div>
         </div>
-        
+
         <div class="col-12">
             <div class="form-group" id="penanggung-jawab-container">
                 <label for="user_id">Penanggung Jawab</label>
@@ -50,16 +50,16 @@
                 </select>
             </div>
         </div>
-        
+
         <div class="col-12">
             <div class="form-group" id="profesi-penanggung-jawab-container">
                 <label for="profesi_id">Profesi Penanggung Jawab</label>
                 <select name="profesi_id[]" class="form-control select2" id="profesiDropdown">
-                    
+
                 </select>
             </div>
         </div>
-        
+
         <div class="col-12 @error('profesi') has-error @enderror">
             <div class="form-group" id="penanggung-jawab-tambahan">
                 <label for="profesi_id">Penanggung Jawab</label>
@@ -81,7 +81,7 @@
                 </select>
             </div>
         </div>
-        
+
         <div class="col-12 @error('price') has-error @enderror">
             <label for="inputEmail4" class="form-label">Harga</label>
             <input type="text"name="price" class="form-control" id="inputEmail4">
@@ -98,8 +98,8 @@
             @enderror
         </div>
 
-        
-        
+
+
         <div class="text-center">
           <button type="submit" class="btn btn-primary">Submit</button>
           <button type="reset" class="btn btn-secondary">Reset</button>
@@ -120,8 +120,8 @@
   <script src="{{ asset('backend/assets/js/notify.min.js') }}"></script>
   <script src="{{ asset('backend/assets/js/select2.full.min.js') }}"></script>
   @include('backend.partials.alerts')
-  
-    
+
+
   <script>
      $('.select2').select2();
   </script>
@@ -150,7 +150,7 @@
             success: function (data) {
                 $.each(data.profesis, function (key, value) {
                     $('#profesiDropdown').append($('<option>', {
-                        text: value.id,
+                        value: value.id,
                         text: value.name
                     }));
                 });
@@ -175,7 +175,6 @@
             success: function (data) {
                 $.each(data.profesis, function (key, value) {
                     $('#profesiDropdowns').append($('<option>', {
-                        text: value.id,
                         value: value.id, // Set the value attribute
                         text: value.name
                     }));

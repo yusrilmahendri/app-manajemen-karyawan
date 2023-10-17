@@ -12,17 +12,16 @@ class DataController extends Controller
 {
     public function todo(){
         $auth = Auth::user();
-        // $userOrders = $auth->orders()->get();
-        $userOrders = $auth->orders()->where('qty', '==', 0)->get();
+        $userOrders = $auth->orders()->where('qty_dtf', '==', 0)->get();
         if(!$userOrders){
             $userOrders = $auth->orders()->get();
         }
-        
+
         return datatables()->of($userOrders)
             ->addColumn('action', 'user.task.action')
             ->addIndexColumn()
             ->rawColumns(['action'])
             ->toJson();
     }
-    
+
 }

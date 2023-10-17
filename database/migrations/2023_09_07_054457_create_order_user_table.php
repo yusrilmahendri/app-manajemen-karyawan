@@ -18,8 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('profesi_id');
             $table->timestamps();
 
-            $table->unique(['user_id', 'profesi_id', 'order_id']);
-
             $table->foreign('user_id')->references('id')
                 ->on('users')
                 ->onUpdate('CASCADE')

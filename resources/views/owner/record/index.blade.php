@@ -3,7 +3,7 @@
 @section('content')
      <!-- tabel -->
    <div class="box-body">
-         <table class="table table-bordered table-hover" 
+         <table class="table table-bordered table-hover"
          id="dataTable">
               <thead>
                   <tr>
@@ -39,12 +39,12 @@
                 serverSide: true,
                 ajax: "{{ route('owner.api.record') }}",
                 columns: [
-                  {data: "user_name"},
-                  {data: "desainer"},
-                  {data: "konika"},
-                  {data: "outdor"},
-                  {data: "dtf"},
-                  {data: "laser"},
+                { data: "name" },
+                { data: "qty_desainer" },
+                { data: "qty_konika" },
+                { data: "qty_outdor" },
+                { data: "qty_dtf" },
+                { data: "qty_laser" }
                 ]
             });
         });

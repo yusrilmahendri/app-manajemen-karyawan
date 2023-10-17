@@ -10,5 +10,5 @@ class OrderUser extends Model
     use HasFactory;
 
     protected $table = 'order_user';
-    protected $fillable = ['order_id', 'user_id', 'profesión_id'];
+    protected $fillable = ['id', 'order_id', 'user_id', 'profesi_id'];
 }

@@ -9,17 +9,18 @@
         <div class="row">
           <!-- Customers Card -->
           <div class="col-xxl-4 col-xl-12">
-            <H1>hALLO, aDMIN</H1>
             <div class="card info-card customers-card">
               <div class="card-body">
-                <h5 class="card-title">Desainer</h5>
+                <h5 class="card-title">Total Pesanan</h5>
                 <div class="d-flex align-items-center">
                   <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3">
-                    <h6></h6>
-                    <span class="text-muted small pt-2 ps-1">total konsumen</span>
+                    <h6>
+                        {{ $totalOrders }}
+                    </h6>
+                    <span class="text-muted small pt-2 ps-1">total pesanan yang dimiliki </span>
                   </div>
                 </div>
               </div>

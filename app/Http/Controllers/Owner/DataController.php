@@ -38,13 +38,27 @@ class DataController extends Controller
         $formattedData = [];
 
         foreach ($data as $user) {
+            $qtyDesainer = 0;
+            $qtyKonika = 0;
+            $qtyOutdor = 0;
+            $qtyDtf = 0;
+            $qtyLaser = 0;
+
+            foreach ($user->orders as $order) {
+                $qtyDesainer += $order->qty_desainer;
+                $qtyKonika += $order->qty_konika;
+                $qtyOutdor += $order->qty_outdor;
+                $qtyDtf += $order->qty_dtf;
+                $qtyLaser += $order->qty_laser;
+            }
+
             $formattedData[] = [
                 'name' => $user->name,
-                'qty_desainer' => $user->orders->sum('qty_desainer'),
-                'qty_konika' => $user->orders->sum('qty_konika'),
-                'qty_outdor' => $user->orders->sum('qty_outdor'),
-                'qty_dtf' => $user->orders->sum('qty_dtf'),
-                'qty_laser' => $user->orders->sum('qty_laser'),
+                'qty_desainer' => $qtyDesainer,
+                'qty_konika' => $qtyKonika,
+                'qty_outdor' => $qtyOutdor,
+                'qty_dtf' => $qtyDtf,
+                'qty_laser' => $qtyLaser,
             ];
         }
 
@@ -54,14 +68,17 @@ class DataController extends Controller
 
     public function generatePdfRecord()
     {
-        // Call the record function to retrieve the data
-        $data = $this->records();
+        // Panggil fungsi record() untuk mengambil data
+        $response = $this->record();
+
+        // Ambil data dari objek respons
+        $data = $response->getOriginalContent()['data'];
 
         // Generate HTML for the PDF content
         $html = '<table style="width:100%; border-collapse: collapse;">';
         $html .= '<thead>';
         $html .= '<tr>';
-        $html .= '<th style="border: 1px solid #000; padding: 8px;">Username</th>';
+        $html .= '<th style="border: 1px solid #000; padding: 8px;">Nama Karyawan / Pengguna </th>';
         $html .= '<th style="border: 1px solid #000; padding: 8px;">Desainer</th>';
         $html .= '<th style="border: 1px solid #000; padding: 8px;">Konika</th>';
         $html .= '<th style="border: 1px solid #000; padding: 8px;">Outdor</th>';
@@ -73,12 +90,12 @@ class DataController extends Controller
 
         foreach ($data as $item) {
             $html .= '<tr>';
-            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['user_name'] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['desainer'] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['konika'] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['outdor'] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['dtf'] . '</td>';
-            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['laser'] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['name'] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['qty_desainer'] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['qty_konika'] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['qty_outdor'] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['qty_dtf'] . '</td>';
+            $html .= '<td style="border: 1px solid #000; padding: 8px;">' . $item['qty_laser'] . '</td>';
             $html .= '</tr>';
         }
 
@@ -95,8 +112,5 @@ class DataController extends Controller
         // Return the PDF as a download
         return $pdf->download('records.pdf');
     }
-
-
-
 
 }

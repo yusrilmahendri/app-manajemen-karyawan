@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function completeOrder(Order $order)
     {
-        if ($order->markAsCompleted()) { // Hapus parameter yang tidak diperlukan
+        if ($order->markAsCompleted()) {
             return redirect()->back()->with('success', 'Order telah selesai.');
         }
 

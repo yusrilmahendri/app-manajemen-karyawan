@@ -67,14 +67,16 @@ public function record()
 }
 
 
-    public function profesis()
+
+    public function profesi()
     {
-        return $this->belongsToMany(Profesi::class, 'order_user')->withTimestamps();
+        return $this->belongsToMany(Profesi::class, 'order_user', 'order_id', 'profesi_id');
     }
+
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'order_user')->withTimestamps();
+        return $this->belongsToMany(User::class);
     }
 
 

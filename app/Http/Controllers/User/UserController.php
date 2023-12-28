@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -34,10 +35,62 @@ class UserController extends Controller
 
     public function completeOrder(Order $order)
     {
-        if ($order->markAsCompleted()) {
-            return redirect()->back()->with('success', 'Order telah selesai.');
-        }
+        $user = Auth::user();
+        $userProfesis = $user->profesis;
+        $orderProfesis = $order->profesi;
+        $userProfesiNames = $userProfesis->pluck('name')->toArray();
+        $orderProfesiNames = $orderProfesis->pluck('name')->toArray();
+        $commonProfesiNames = array_intersect($userProfesiNames, $orderProfesiNames);
 
-        return redirect()->back()->with('danger', 'Order telah selesai sebelumnya.');
+        foreach ($commonProfesiNames as $commonProfesiName) {
+            // Periksa apakah qty sudah mencapai 1 sebelum menambahkan
+            switch ($commonProfesiName) {
+                case 'Desainer':
+                    if ($order->qty_desainer < 1) {
+                        $order->qty_desainer += 1;
+                    }
+                    break;
+                case 'DTF':
+                    if ($order->qty_dtf < 1) {
+                        $order->qty_dtf += 1;
+                    }
+                    break;
+                case 'Konika':
+                    if ($order->qty_konika < 1) {
+                        $order->qty_konika += 1;
+                    }
+                    break;
+                case 'Laser':
+                    if ($order->qty_laser < 1) {
+                        $order->qty_laser += 1;
+                    }
+                    break;
+                case 'Outdor':
+                    if ($order->qty_outdor < 1) {
+                        $order->qty_outdor += 1;
+                    }
+                    break;
+            }
+        }
+        if (
+            $order->qty_desainer == 1 &&
+            $order->qty_dtf == 1 &&
+            $order->qty_konika == 1 &&
+            $order->qty_laser == 1 &&
+            $order->qty_outdor == 1
+        ) {
+            return redirect()->back()->with('danger', 'Order telah diselesaikan sebelumnya.');
+        }
+        $order->save();
+        return redirect()->back()->with('success', 'Order Selesai');
     }
+
+
+
+
+
+
+
+
+
 }

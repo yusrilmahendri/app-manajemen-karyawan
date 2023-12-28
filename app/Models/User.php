@@ -47,10 +47,11 @@ class User extends Authenticatable
     public function profesis(){
         return $this->belongsToMany(Profesi::class, 'user_profesi');
     }
+
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'order_user')->withTimestamps();
+        return $this->belongsToMany(Order::class);
     }
-    
+
 
 }

@@ -25,6 +25,7 @@ class Profesi extends Model
 
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'order_user');
+        return $this->belongsToMany(Order::class, 'order_user', 'profesi_id', 'order_id')
+        ->withTimestamps();
     }
 }

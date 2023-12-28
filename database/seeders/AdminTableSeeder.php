@@ -22,13 +22,13 @@ class AdminTableSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('12345678'),
             ],
-            [   
+            [
                 'role' => 'owner',
                 'name' => 'owner',
                 'email' => 'owner@gmail.com',
                 'password' => Hash::make('12345678'),
             ],
-            [   
+            [
                 'role' => 'user',
                 'name' => 'user',
                 'email' => 'user@gmail.com',

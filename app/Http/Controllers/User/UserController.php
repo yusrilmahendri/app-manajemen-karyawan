@@ -72,18 +72,16 @@ class UserController extends Controller
                     break;
             }
         }
-        if (
-            $order->qty_desainer == 1 &&
-            $order->qty_dtf == 1 &&
-            $order->qty_konika == 1 &&
-            $order->qty_laser == 1 &&
-            $order->qty_outdor == 1
-        ) {
+
+        // Check if any qty was updated before saving
+        if ($order->isDirty()) {
+            $order->save();
+            return redirect()->back()->with('success', 'Order Selesai');
+        } else {
             return redirect()->back()->with('danger', 'Order telah diselesaikan sebelumnya.');
         }
-        $order->save();
-        return redirect()->back()->with('success', 'Order Selesai');
     }
+
 
 
 
